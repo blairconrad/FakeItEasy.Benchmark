@@ -10,5 +10,7 @@ if (!$env:R_HOME) {
 
 dotnet run --configuration Release --project .\src\FakeItEasy.Benchmark\FakeItEasy.Benchmark.csproj -- $args
 
-.\plot.py .\BenchmarkDotNet.Artifacts\results\FakeItEasy.Benchmark.Program.ArgumentConstraintBenchmarks-report.csv ($args | Where-Object { ! $_.StartsWith("--")})
-.\BenchmarkDotNet.Artifacts\results\FakeItEasy.Benchmark.Program.ArgumentConstraintBenchmarks-report.png
+$report = (Get-ChildItem .\BenchmarkDotNet.Artifacts\results\*-report.csv | Sort-Object -Property LastWriteTime)[-1].FullName
+
+.\plot.py $report ($args | Where-Object { ! $_.StartsWith("--")})
+& ($report.Replace("-report.csv", "-report.png"))
