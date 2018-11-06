@@ -93,6 +93,26 @@
                 return fake.IntReturnWith0Parameters();
             }
         }
+        public class CreationBenchmarks
+        {
+            [Benchmark(Description = "A.Fake<IFake>()")]
+            public IFake FakeAnInterface()
+            {
+                return A.Fake<IFake>();
+            }
+
+            [Benchmark(Description = "A.Fake<SimpleClass>()")]
+            public SimpleClass FakeAClass()
+            {
+                return A.Fake<SimpleClass>();
+            }
+
+            // [Benchmark(Description = "A.Fake<Action>()")]
+            // public Action FakeADelegate()
+            // {
+            //     return A.Fake<Action>();
+            // }
+        }
 
         public class ArgumentConstraintBenchmarks
         {
@@ -189,5 +209,9 @@
                 A.CallTo(() => this.fake.IntReturnWithEnumerableParameter(A<IEnumerable<int>>.That.IsSameSequenceAs(1, 2, 3, 4, 5))).Returns(1);
             }
         }
+    }
+
+    public class SimpleClass
+    {
     }
 }
