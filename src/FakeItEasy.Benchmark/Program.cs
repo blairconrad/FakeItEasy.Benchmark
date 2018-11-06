@@ -58,7 +58,7 @@
                     .WithLaunchCount(1)
                     // .WithWarmupCount(1)
                     .With(CsProjCoreToolchain.Current.Value)
-                    .WithNuget("FakeItEasy", versions[i]).WithId(versions[i]);
+                    .WithNuGet("FakeItEasy", versions[i]).WithId(versions[i]);
 
                     if (i == 0)
                     {
