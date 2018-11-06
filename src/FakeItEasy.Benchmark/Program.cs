@@ -107,6 +107,18 @@
                 return A.Fake<SimpleClass>();
             }
 
+            [Benchmark(Description = "A.Fake<LessSimpleClass>()")]
+            public LessSimpleClass FakeAClassWithNoParameterlessConstructor()
+            {
+                return A.Fake<LessSimpleClass>();
+            }
+
+            [Benchmark(Description = "A.Fake<SimpleClass>(o => o.Implements<IFake>())")]
+            public SimpleClass FakeAClassWithInterface()
+            {
+                return A.Fake<SimpleClass>(o => o.Implements<IFake>());
+            }
+
             // [Benchmark(Description = "A.Fake<Action>()")]
             // public Action FakeADelegate()
             // {
@@ -213,5 +225,12 @@
 
     public class SimpleClass
     {
+    }
+
+    public class LessSimpleClass
+    {
+        public LessSimpleClass(SimpleClass c)
+        {
+        }
     }
 }
