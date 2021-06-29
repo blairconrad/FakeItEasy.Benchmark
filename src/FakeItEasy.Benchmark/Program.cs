@@ -13,6 +13,7 @@
 
     public interface IFake
     {
+        bool BoolWith1Parameter(object o);
         int IntReturnWith0Parameters();
         int IntReturnWith1IntParameter(int i);
         int IntReturnWith1ObjectParameter(object o);
@@ -76,6 +77,29 @@
             }
         }
 
+        public class SlowObjectBenchmark
+        {
+            private IFake fake = A.Fake<IFake>();
+
+            [GlobalSetup]
+            public void Init()
+            {
+                this.fake = A.Fake<IFake>();
+            }
+
+            [Benchmark()]
+            public bool Equals()
+            {
+                return fake.Equals(this);
+            }
+
+            [Benchmark()]
+            public void UnconfiguredBoolMethod()
+            {
+                fake.BoolWith1Parameter(this);
+            }
+        }
+
         public class ReturnsBenchmarks
         {
             private IFake fake = A.Fake<IFake>();
@@ -93,6 +117,7 @@
                 return fake.IntReturnWith0Parameters();
             }
         }
+
         public class CreationBenchmarks
         {
             [Benchmark(Description = "A.Fake<IFake>()")]
